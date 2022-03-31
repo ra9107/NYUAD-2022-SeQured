@@ -6,9 +6,10 @@
 With the increasing risk of cybersecurity looming over, SeQured uses quantum randomness to anonymize medical data. The aim is to maintain the privacy of the patient's medical data, while at the same time enabling the ability of sharing it with medical practitioners in an easy and secure way. SeQured uses the Electrocardiogram as a use case to demonstrate the added value of the solution.
 
 
-# 1: Quantum Randomness Sub-system:
+# 1: Quantum Randomness:
 
-	- Quantum Randomness sub-system: The quantum randomness sub-system uses the quantum randomness feature in order to generate unique random seeds to anonymize an ECG signal.
+	- Quantum mechanics is fundamentally non-deterministic.
+	- Need to finish...
 	
 
 
