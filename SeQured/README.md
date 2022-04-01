@@ -18,9 +18,12 @@ s: Rate of sampling
 
 h: Heart Beat Rate
 
-n: Number of samples (n=d*s)
+n: Number of samples (n=d\*s)
 
+These parameters determines how Neurokit generates the ECG signals. The signal can be generated with the following function. 
+ecg = nk.ecg_simulate(duration=d, sampling_rate=s, heart_rate=h)
 
+The most important parameters here are s and d. They determine the size of the array (n), which needs to be encoded into a QR Code. The size needs to be adjusted to make the information fit the QR code.
 
 # 3: Intergrating Quantum Randomness into ECG's
 
