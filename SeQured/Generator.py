@@ -34,8 +34,8 @@ n= d*s  #Number of samples
 #Alternatively, choose a subset of the Signal that will fit in a QR Code
 
 #Distortion factors
-k= 5    #k is the noise factor
-l= 2    #l is the stretch factor
+k= 2    #k is the noise factor
+l= 6    #l is the stretch factor
 m= 3    #m is the decay factor
 
 #Key generation
@@ -59,15 +59,15 @@ xf = fftfreq(n, 1/s)   #Obtaining the frequency for plotting the Fourier Transfo
 #Creating the array with the distortion to apply
 #Manipulate the distortion factors to control the distortion
 np.random.seed(key_array) #Seed for the generator is only valid for one random function call (number or 1-d array)
-distortion_array = (np.random.rand(n)-0.5)/k  #Shifting values from 0-1 to -0.5 to 0.5, then dividing by k
+distortion_array = np.complex128(np.random.rand(n)-0.5)/k  #Shifting values from 0-1 to -0.5 to 0.5, then dividing by k
 for i,v in enumerate(distortion_array):
     x = i
     x = (x/n)*l
     distortion_array[i] = distortion_array[i] * (1/(1+x)**m)    
-distortion_array = distortion_array+1
+distortion_array = np.exp(1j*2*np.pi*distortion_array)
 
 #Applying the distortion (by multiplying the scaling)
-mft_ecg = ft_ecg*distortion_array
+mft_ecg = np.complex128(ft_ecg)*distortion_array
 
 #Applying Inverse Fourier Transform (to obtain modified ECG in time domain)
 m_ecg = ifft(mft_ecg)
@@ -76,7 +76,7 @@ m_ecg = ifft(mft_ecg)
 m_ecg_real = m_ecg.real
 
 #Float64 to Int16 (Normalizing the float) 
-scale = 1.2+0.5     #Static Scale
+scale = 1.7+0.6     #Static Scale
 #scale = np.max(m_ecg_real) - np.min(m_ecg_real)    #Dynamic Scale (need to find a way to send this scale to the decoder)
 INT_16_MAX = 2**14
 normalized = np.int16(m_ecg_real*INT_16_MAX/scale)  #Normalized Array containing int16
@@ -107,7 +107,7 @@ img = qr.make_image(fill_color="black", back_color="white")
 img.save("QR_Code.png") #Saving the QR Code
 
 #Debug
-#plt.figure(1)
-#plt.plot(range(0,n),m_ecg_real,range(0,n),ecg)
-#plt.gca().legend(('Distorted ECG','ECG'))
-#plt.show()
+plt.figure(1)
+plt.plot(range(0,n),m_ecg_real,range(0,n),ecg)
+plt.gca().legend(('Distorted ECG','ECG'))
+plt.show()
