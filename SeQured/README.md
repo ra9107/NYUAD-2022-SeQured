@@ -1,4 +1,4 @@
-# This is the readme file for NYUAD Hackathon 2022 for group SeQure 
+# Team SeQured readme file (NYUAD Hackathon 2022) 
 
 
 # Background:
